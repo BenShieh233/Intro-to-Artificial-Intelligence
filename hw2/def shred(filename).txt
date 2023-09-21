@@ -1,0 +1,83 @@
+def shred(filename):
+    #Using a dictionary here. You may change this to any data structure of
+    #your choice such as lists (X=[]) etc. for the assignment
+    X=dict()
+    with open('letter.txt', encoding='utf-8') as f:
+        text = f.read()
+
+        # Initialize a dictionary with all uppercase letters A to Z and counts initialized to 0
+        char_counts = {char: 0 for char in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'}
+
+        # Update the counts based on the characters in the text
+        for char in text:
+            if char.isalpha():
+                char = char.upper()
+                if char in char_counts:
+                    char_counts[char] += 1
+    f.close()
+
+    with open('letter_output.txt', 'w') as f:
+        f.write("Q1\n")
+        for char, count in char_counts.items():
+            f.write(f"{char} {count}\n")
+    f.close()
+
+    return X
+
+Adjust the code so that output X is char_counts, but don't create char_count.
+
+
+To implement the language identification via Bayes rule, we arrange the 26 counts into a 26-dimensional count vector: X = (X1, ..., X26)
+where X1 is the count of A, X26 is the count of Z, and X is the observed evidence. We are interested in the source language y ∈ {English, Spanish}. Our goal is to compute the conditional probability P(Y=y|X).
+Write down the Bayes rule to compute P(Y=y|X)
+
+Now P(X|Y=y) is the conditional probability of observing evidence X given language y. We will use the multinomial probability. Under this model, for y=English let e = (e1, ..., e26) be a 26-dimensional multinomial parameter vector of English where ei>=0 for i=1...26, and sum of ei equals 1. ei is the probability of the ith character in English. Similarly, let s = (s1,...,s26) be the parameter vector of Spanish.
+Compute the multinomial probability P(X|Y=y)
+
+Assume the multinomial coefficient is (x1+x2+...+x26)!/(x1!*...*x26!), how to compute the multinomial probability P(X|Y=y).
+
+Suppose the multinomial coefficient could be represent as C(X), then compute the P(Y=y|X) using this term.
+
+Suppose we express f(y) = P(Y=y) multiply the Multiplicative multiplication of (e1^x1*....*e26^x26). Then we can say P(Y=y|X) = f(y)/f(English) + f(Spanish) where y can take values between {English, Spanish}. Now I want to simplify it into the log domain. How should I write F(y) = logf(y)?
+
+ e**(FSpan - FEng) raises TypeError: unsupported operand type(s) for ** or pow(): 'list' and 'float' where FSpan and FEng are floats.
+
+Suppose in a .py file, I want to print the output "Q1" in the first line, and 
+
+print("Q1")
+for char, count in shred().itmes():
+    print(f"{char} {count}"\n)
+SyntaxError: unexpected character after line continuation character
+
+print("Q1")
+for char, count in shred().items():
+    print(f"{char} {count}\n")
+
+I want the output be like:
+Q1
+A	0
+B	0
+C	0
+D	0
+E	0
+F	0
+G	1
+H	1
+I	2
+J	0
+K	0
+L	2
+M	0
+N	0
+O	1
+P	0
+Q	0
+R	0
+S	0
+T	0
+U	0
+V	0
+W	0
+X	0
+Y	0
+Z	0
